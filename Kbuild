@@ -884,9 +884,8 @@ CDEFINES :=	-DANI_LITTLE_BYTE_ENDIAN \
 		-DANI_LOGDUMP \
 		-DWLAN_PERF \
 		-DPTT_SOCK_SVC_ENABLE \
-		-Wno-unused-const-variable \
-		-Wno-discarded-array-qualifiers \
-		-std=gnu90 \
+		-Wall\
+		-Werror\
 		-D__linux__ \
 		-DHAL_SELF_STA_PER_BSS=1 \
 		-DWLAN_FEATURE_VOWIFI_11R \
@@ -1252,10 +1251,9 @@ CDEFINES += -DWLAN_OPEN_P2P_INTERFACE
 CDEFINES += -DWLAN_ENABLE_SOCIAL_CHANNELS_5G_ONLY
 
 #Enable RX Full re-order OL feature only "LL and NON-MDM platform"
-#Only for ROME3
-#ifeq ($(CONFIG_HIF_PCI), 1)
-#CDEFINES += -DWLAN_FEATURE_RX_FULL_REORDER_OL
-#endif
+ifeq ($(CONFIG_HIF_PCI), 1)
+CDEFINES += -DWLAN_FEATURE_RX_FULL_REORDER_OL
+endif
 endif
 
 #Enable Signed firmware support for split binary format
@@ -1299,11 +1297,11 @@ endif
 # Some kernel include files are being moved.  Check to see if
 # the old version of the files are present
 
-ifneq ($(wildcard $(srctree)/include/soc/qcom/smd.h),)
+ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/mach-msm/include/mach/msm_smd.h),)
 CDEFINES += -DEXISTS_MSM_SMD
 endif
 
-ifneq ($(wildcard $(srctree)/include/soc/qcom/smsm.h),)
+ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/mach-msm/include/mach/msm_smsm.h),)
 CDEFINES += -DEXISTS_MSM_SMSM
 endif
 
