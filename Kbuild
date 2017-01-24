@@ -884,9 +884,8 @@ CDEFINES :=	-DANI_LITTLE_BYTE_ENDIAN \
 		-DANI_LOGDUMP \
 		-DWLAN_PERF \
 		-DPTT_SOCK_SVC_ENABLE \
-		-Wno-unused-const-variable \
-		-Wno-discarded-array-qualifiers \
-		-std=gnu90 \
+		-Wall\
+		-Werror\
 		-D__linux__ \
 		-DHAL_SELF_STA_PER_BSS=1 \
 		-DWLAN_FEATURE_VOWIFI_11R \
@@ -1130,7 +1129,7 @@ CDEFINES += -DCONFIG_HL_SUPPORT
 endif
 
 #Enable FW logs through ini
-CDEFINES += -DCONFIG_FW_LOGS_BASED_ON_INI
+#CDEFINES += -DCONFIG_FW_LOGS_BASED_ON_INI
 
 #Enable pci read/write config functions
 ifeq ($(CONFIG_ATH_PCI), 1)
@@ -1299,11 +1298,11 @@ endif
 # Some kernel include files are being moved.  Check to see if
 # the old version of the files are present
 
-ifneq ($(wildcard $(srctree)/include/soc/qcom/smd.h),)
+ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/mach-msm/include/mach/msm_smd.h),)
 CDEFINES += -DEXISTS_MSM_SMD
 endif
 
-ifneq ($(wildcard $(srctree)/include/soc/qcom/smsm.h),)
+ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/mach-msm/include/mach/msm_smsm.h),)
 CDEFINES += -DEXISTS_MSM_SMSM
 endif
 
